@@ -4,6 +4,7 @@ class NodeJSExecutor {
 	public $exitCode = 0;
 	public $cmd = "";
 	public $nodeVersion = "";
+	public $timeout = 30;
 	
 	public function __construct() {
 		if (! $this->isNodeInstalled ()) {
@@ -23,17 +24,16 @@ class NodeJSExecutor {
 		$process = proc_open ( "node --version", $descriptorspec, $pipes, NULL, NULL );
 		
 		if (is_resource ( $process )) {
-			// $pipes now looks like this:
-			// 0 => writeable handle connected to child stdin
-			// 1 => readable handle connected to child stdout
-			// Any error output will be appended to /tmp/error-output.txt
-			
-			$this->nodeVersion = stream_get_contents ( $pipes [1] );
-			fclose ( $pipes [1] );
+				// $pipes now looks like this:
+				// 0 => writeable handle connected to child stdin
+				// 1 => readable handle connected to child stdout
+				// Any error output will be appended to /tmp/error-output.txt
+			$this->nodeVersion = stream_get_contents ($pipes[1]);
+			fclose ($pipes[1]);
 			
 			// It is important that you close any pipes before calling
 			// proc_close in order to avoid a deadlock
-			$exitCode = proc_close ( $process );
+			$exitCode = proc_close ($process);
 		}
 		
 		return $exitCode == 0;
@@ -41,6 +41,7 @@ class NodeJSExecutor {
 	
 	public function run($file, $parameters = "") {
 		$this->exitCode = 0;
+		$this->result ="";
 		
 		if (!file_exists($file) || !is_file($file)) {
 			throw new Exception('NodeJSExecutor // File: ' . $file . ' not found!');
@@ -62,12 +63,20 @@ class NodeJSExecutor {
 			// 1 => readable handle connected to child stdout
 			// Any error output will be appended to /tmp/error-output.txt
 			
-			$this->result = stream_get_contents ( $pipes [1] );
-			fclose ( $pipes [1] );
+			stream_set_timeout($pipes[1], 30);
+
+			while (($content = stream_get_contents($pipes[1])) != false) {
+				$this->result = $this->result . $content;
+				echo "Content: " . $content . "<br>";
+			}
+			
+			//print_r(stream_get_meta_data($pipes[1]));
+			
+			fclose($pipes[1]);
 			
 			// It is important that you close any pipes before calling
 			// proc_close in order to avoid a deadlock
-			$this->exitCode = proc_close ( $process );
+			$this->exitCode = proc_close($process);
 		}
 		
 		return $this->exitCode;
