@@ -1,14 +1,14 @@
 # PHP-NodeJS-Executor
-Small Simple PHP Class for executing Node Js Files
+A small, simple PHP class for executing Node.js files.
 
-#### Problem:
-I needed to execute a Node JS Script. Well yes sounds funny theses times because everybody has an node js server running, but in my case it would have been too much effort.
+## Problem
+In certain scenarios, you may need to execute a Node.js script from a PHP environment. While it's common to have a Node.js server running, setting one up might require significant effort. This class offers a straightforward solution.
 
-#### What does it do?
-- Checks if php can execute node and saves the version
-- Execute a script and returns the output and the exit Code (https://nodejs.org/api/process.html#process_exit_codes / v0.12.0 Manual & Documentation)
+## What It Does
+- Verifies if PHP can execute Node.js and stores the version.
+- Executes a script, returning the output and the exit code. (Refer to [Node.js Process Exit Codes](https://nodejs.org/api/process.html#process_exit_codes) for details.)
 
-#### Example
+## Example Usage
 ```
 require 'NodeJSExecutor.php';
 
@@ -19,7 +19,8 @@ echo "Exit Code: " . $executor->exitCode . "<br>";
 echo "Result: " . $executor->result . "<br>";
 ```
 
-#### Exceptions
-The class can fire two exceptions if ...
-- there is no node js found. The command "node --version" is executed and the result code checked.
-- the js file is not found
+## Exceptions
+The class can trigger two exceptions:
+
+- Node.js is not found (checks the result of `node --version`).
+- The specified JavaScript file is not found.
