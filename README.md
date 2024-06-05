@@ -1,4 +1,8 @@
 # PHP-NodeJS-Executor
+_by [#thespielplatz](https://t.me/thespielplatz)_
+
+[![MIT License Badge](license-badge.svg)](LICENSE)
+
 A small, simple PHP class for executing Node.js files.
 
 ## Problem
@@ -24,3 +28,7 @@ The class can trigger two exceptions:
 
 - Node.js is not found (checks the result of `node --version`).
 - The specified JavaScript file is not found.
+
+# Tip me
+
+If you appreciate this project, feel free to use it, refactor it, enjoy it, or even expand on it. Why not [send some tip love?](https://getalby.com/p/thespielplatz)
