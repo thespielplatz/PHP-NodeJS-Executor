@@ -1,5 +1,5 @@
 # PHP-NodeJS-Executor
-_by [#thespielplatz](https://t.me/thespielplatz)_
+_by [#thespielplatz](https://github.com/thespielplatz)_
 
 [![MIT License Badge](license-badge.svg)](LICENSE)
 
